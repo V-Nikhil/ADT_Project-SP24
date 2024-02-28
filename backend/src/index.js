@@ -1,4 +1,5 @@
 // Import necessary modules
+require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
@@ -6,15 +7,17 @@ const chatRoutes = require('./routes/chatRoutes');
 const logger = require('./middleware/logger');
 
 const app = express();
-const PORT = process.env.PORT || 3002;
+
+const PORT = process.env.PORT;
+const DB_URI = process.env.DB_URI;
 
 // Middleware
 app.use(bodyParser.json());
-app.use('/chat', chatRoutes);
-app.use(logger);
+// app.use('/chat', chatRoutes);
+// app.use(logger);
 
 // MongoDB connection
-mongoose.connect('mongodb+srv://sriramtoram:password9594@cluster0.5zjkmzu.mongodb.net/')
+mongoose.connect(DB_URI)
   .then(() => console.log('Connected to MongoDB...'))
   .catch(err => console.error('Could not connect to MongoDB...', err));
 

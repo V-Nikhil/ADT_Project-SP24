@@ -1,9 +1,9 @@
-const Message = require('../models/MessageModel');
+// const Message = require('../models/MessageModel');
 
-exports.fetchMessages = async () => {
-  return await Message.findAll();
-};
+// exports.fetchMessages = async () => {
+//   return await Message.findAll();
+// };
 
-exports.saveMessage = async (content) => {
-  await Message.create({ content });
-};
+// exports.saveMessage = async (content) => {
+//   await Message.create({ content });
+// };
