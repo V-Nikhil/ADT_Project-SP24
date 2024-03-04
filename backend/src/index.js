@@ -5,8 +5,8 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const chatRoutes = require('./routes/chatRoutes');
 const userRoutes = require('./routes/userRoutes');
-// const authRoutes = require('./routes/authRoutes');
-// const logger = require('./middleware/logger');
+const cors = require("cors");
+const { notFound, errorHandler } = require("./middleware/errorMiddleware");
 
 
 const app = express();
@@ -17,6 +17,8 @@ const DB_URI = process.env.DB_URI;
 // Middleware
 app.use(bodyParser.json());
 app.use(express.json());
+app.use(cors({origin: "*"}));
+
 
 // app.use(logger);
 
@@ -41,7 +43,7 @@ app.get('/', (req, res) => {
 
 app.use('/user',userRoutes);
 
-// app.use('/chat', chatRoutes);
-
+app.use(notFound);
+app.use(errorHandler);
 
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

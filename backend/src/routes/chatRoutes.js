@@ -12,10 +12,10 @@ const Router = express.Router();
 
 Router.use(protect);
 
-Router.route("/").post( accessChat)
-                 .get( fetchChats);
-Router.post("/createGroup", createGroupChat);
-Router.get("/fetchGroups",fetchGroups);
-Router.put("/groupExit", groupExit);
+Router.route("/").post(accessChat);
+Router.route("/").get(fetchChats);
+Router.route("/createGroup").post(createGroupChat);
+Router.route("/fetchGroups").get(fetchGroups);
+Router.route("/groupExit").put(groupExit);
 
 module.exports = Router;

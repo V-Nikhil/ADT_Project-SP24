@@ -9,7 +9,8 @@ const accessChat = expressAsyncHandler( async (req, res) => {
         return res.sendStatus(400);
     }
     var isChat = await Chat.find({
-        isGroupChat: false,{ users: {$all:[req.user._id,userId]} },
+        isGroupChat: false,
+        users : { $all: [req.user._id,userId]} 
       })
         .populate("users", "-password")
         .populate("latestMessage")
@@ -20,9 +21,9 @@ const accessChat = expressAsyncHandler( async (req, res) => {
         res.send(isChat[0]);
     }else{
         var chatData ={
-            isGroupChat=false,
-            chatName ="sender",
-            users:[req.user._id,userId]
+            isGroupChat: false,
+            chatName : "sender",
+            users:[req.user._id, userId]
         }
     }
     try{
@@ -38,7 +39,7 @@ const accessChat = expressAsyncHandler( async (req, res) => {
 const fetchChats = expressAsyncHandler(async (req, res) => {
     try {
       console.log("Fetch Chats aPI : ", req);
-      var results = await Chat.find({{ users: req.user._id }})
+      var results = await Chat.find({ users: req.user._id })
                                 .populate("users", "-password")
                                 .populate("groupAdmin", "-password")
                                 .populate("latestMessage")
@@ -62,7 +63,7 @@ const fetchGroups = expressAsyncHandler(async (req, res) => {
     }
   });
 
-const createGroupChat = expressAsyncHandler((req,res) => {
+const createGroupChat = expressAsyncHandler(async (req,res) => {
     if (!req.body.users || !req.body.name) {
         return res.status(400).send({ message: "Data is insufficient" });
     }
@@ -78,7 +79,7 @@ const createGroupChat = expressAsyncHandler((req,res) => {
           groupAdmin: req.user,
         });
         
-        const fullGroupChat = await chatData.findOne({{ _id: groupChat._id }})
+        const fullGroupChat = await chatData.findOne({ _id: groupChat._id })
                                             .populate("users","-password")
                                             .populate("groupAdmin","-password");
         res.status(200).json(fullGroupChat);
@@ -109,6 +110,14 @@ const groupExit = expressAsyncHandler(async (req, res) => {
       res.json(removed);
     }
   });
+
+  module.exports = {
+    accessChat,
+    fetchChats,
+    fetchGroups,
+    createGroupChat,
+    groupExit,
+  };
 
 
 
