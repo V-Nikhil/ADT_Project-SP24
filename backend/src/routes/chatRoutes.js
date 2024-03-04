@@ -1,12 +1,21 @@
-// const express = require('express');
-// const chatController = require('../controllers/chatController');
+const express = require("express");
+const {
+  accessChat,
+  fetchChats,
+  createGroupChat,
+  groupExit,
+  fetchGroups,
+} = require("../controllers/chatController.js");
+const { protect } = require("../middleware/authMiddleware");
 
-// const router = express.Router();
+const Router = express.Router();
 
-// // Route for getting messages
-// router.get('/messages', chatController.getMessages);
+Router.use(protect);
 
-// // Route for posting a new message
-// router.post('/message', chatController.postMessage);
+Router.route("/").post( accessChat)
+                 .get( fetchChats);
+Router.post("/createGroup", createGroupChat);
+Router.get("/fetchGroups",fetchGroups);
+Router.put("/groupExit", groupExit);
 
-// module.exports = router;
+module.exports = Router;

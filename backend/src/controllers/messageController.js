@@ -25,14 +25,14 @@ const sendMessage= expressAsyncHandler(async (req,res)=>{
         console.log("Invalid data passed into request");
         return res.status(400).send();
     }
-    const newMessage = {
+    var newMessage = {
         sender: req.user._id,
         content : content,
         chat :chatId
     }
 
     try{
-        const message = await Message.create(newMessage);
+        var message = await Message.create(newMessage);
         console.log(message);
         message = await message.populate("sender","name email")
                                 .populate("chat")
