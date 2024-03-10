@@ -2,13 +2,13 @@
 ADT Project for spring 2024
 
 
-Team Names: 
+Teammates: 
 
-Vivek Reddy Munnangi 
+  Vivek Reddy Munnangi 
 
-Shivangi Sharma 
+  Shivangi Sharma 
 
-Venkat Nikhil Chowdary Chimata 
+  Venkat Nikhil Chowdary Chimata 
 
  
 
