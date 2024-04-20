@@ -1,0 +1,90 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f2f5;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.button {
+    background-color: #1877f2;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-right: 10px;
+}
+
+.button:hover {
+    background-color: #145da0;
+}
+
+.form-input {
+    width: calc(100% - 40px); /* Full width for search input fields */
+    padding: 10px;
+    font-size: 16px;
+    margin-bottom: 20px;
+}
+
+.card {
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.card-title {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #1877f2;
+}
+
+.card-content {
+    font-size: 16px;
+}
+
+.welcome {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #1877f2;
+}
+
+.login-heading,
+.signup-heading {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #1877f2;
+}
+
+.login-input,
+.signup-input {
+    width: calc(100% - 40px); /* Adjusted width for login and signup input fields */
+    padding: 10px;
+    font-size: 16px;
+    margin-bottom: 20px;
+}
+
+.login-button,
+.signup-button {
+    background-color: #1877f2;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-right: 10px;
+}
+
+.login-button:hover,
+.signup-button:hover {
+    background-color: #145da0;
+}
