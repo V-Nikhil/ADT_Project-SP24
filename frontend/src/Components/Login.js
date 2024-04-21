@@ -17,6 +17,7 @@ function Login() {
 
   const changeHandler = (e) => {
     setData({ ...data, [e.target.name]: e.target.value });
+    console.log(data);
   };
 
   const loginHandler = async (e) => {
@@ -30,16 +31,28 @@ function Login() {
       };
 
       const response = await axios.post(
-        "http://localhost:3014/user/login/",
-        data,
-        config
-      );
+        "http://localhost:3015/user/login/",
+         { email: data.email, password: data.password },
+        config,
+        {
+          headers: {
+            "Content-type": "application/json",
+          },
+        }
+      )
+      .then(response => {
+        console.log(response);
+      })
+      .catch(error => {
+        console.log(error);
+      });
       console.log("Login : ", response);
       setLogInStatus({ msg: "Success", key: Math.random() });
       setLoading(false);
       localStorage.setItem("userData", JSON.stringify(response));
       navigate("/app/welcome");
     } catch (error) {
+      console.log(error);
       setLogInStatus({
         msg: "Invalid User name or Password",
         key: Math.random(),
@@ -56,34 +69,40 @@ function Login() {
           "Content-type": "application/json",
         },
       };
+      console.log(data);
 
       const response = await axios.post(
-        "http://localhost:3014/user/register/",
-        data,
-        config
-      );
+        "http://localhost:3015/user/register/",
+         { name:data.name,email: data.email, password: data.password },
+        config,
+        {
+          headers: {
+            "Content-type": "application/json",
+          },
+        }
+      ).then(response => {
+
       console.log(response);
       setSignInStatus({ msg: "Success", key: Math.random() });
       navigate("/app/welcome");
       localStorage.setItem("userData", JSON.stringify(response));
       setLoading(false);
-    } catch (error) {
+    })
+    .catch(error => {
       console.log(error);
-      if (error.response.status === 405) {
-        setLogInStatus({
-          msg: "User with this email ID already Exists",
-          key: Math.random(),
-        });
-      }
-      if (error.response.status === 406) {
-        setLogInStatus({
-          msg: "User Name already Taken, Please take another one",
-          key: Math.random(),
-        });
-      }
-      setLoading(false);
+    });
     }
-  };
+    catch (error) {
+      console.log(error);
+      setSignInStatus({
+        msg: "User Already Exists",
+        key: Math.random(),
+      });
+    }
+    setLoading(false);
+  }
+  
+
 
   return (
     <>
@@ -103,10 +122,10 @@ function Login() {
             <TextField
               onChange={changeHandler}
               id="standard-basic"
-              label="Enter User Name"
+              label="Enter email"
               variant="outlined"
               color="secondary"
-              name="name"
+              name="email"
               onKeyDown={(event) => {
                 if (event.code == "Enter") {
                   // console.log(event);
@@ -173,7 +192,7 @@ function Login() {
             />
             <TextField
               onChange={changeHandler}
-              id="standard-basic"
+              id="standard-basic2"
               label="Enter Email Address"
               variant="outlined"
               color="secondary"

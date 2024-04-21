@@ -8,8 +8,8 @@ require('dotenv').config();
  
 const loginController = expressAsyncHandler(async(req,res) => { 
     // console.log(req.body);
-    const{name,email,password}= req.body;
-    if(!name||!email||!password){
+    const{email,password}= req.body;
+    if(!email||!password){
         res.sendStatus(400);
         throw Error("All necessary fields have not been filled to sign in");
     }
@@ -19,21 +19,21 @@ const loginController = expressAsyncHandler(async(req,res) => {
     console.log(match);
     if(match){
         console.log("logged in")
-        res.json({
+        res.status(200).json({
             _id :user._id,
             name: user.name,
             email:user.email,
-            isAdmin:user.isAdmin,
-            token:generateToken(user._id)
+            // isAdmin:user.isAdmin,
+            // token:generateToken(user._id)
         })
     }else{
         res.sendStatus(400);
         throw new Error("unauthorized");
 }});
 
-const generateToken = (id)=>{
-    return jwt.sign({id},process.env.ACCESS_TOKEN_SECRET,{expiresIn:"30d"});
-}
+// const generateToken = (id)=>{
+//     return jwt.sign({id},process.env.ACCESS_TOKEN_SECRET,{expiresIn:"30d"});
+// }
 
 const registerController = expressAsyncHandler(async (req, res) => {
     const{name, email, password} = req.body;
@@ -59,27 +59,29 @@ const registerController = expressAsyncHandler(async (req, res) => {
             const hashedPassword = await bcrypt.hash(password,salt);
             const user= await userModel.create({name, email, password:hashedPassword});
             if(user){
-                res.json({
+                console.log("registration successful"); 
+                res.status(200).json({
                     id:user._id,
                     name : user.name,
                     email:user.email,
-                    isAdmin:user.isAdmin,
-                    token: generateToken(user._id)
+                    // isAdmin:user.isAdmin,
+                    // token: generateToken(user._id)
 
-                })
+                });
+                console.log("registration successful",user);
             }else{
                 console.log("registration error",err);
             }
 });
 
-const fetchAllUsersController = expressAsyncHandler(async (req, res) => {
-    const users = await UserModel.find({
-                $or: [ 
-                    { name: { $regex: req.query.search, $options: "i" } }, 
-                    { email: { $regex: req.query.search, $options: "i" } } 
-                ] 
-            }).find({ _id: { $ne: req.user._id } },);
-    res.send(users);
-  });
+// const fetchAllUsersController = expressAsyncHandler(async (req, res) => {
+//     const users = await UserModel.find({
+//                 $or: [ 
+//                     { name: { $regex: req.query.search, $options: "i" } }, 
+//                     { email: { $regex: req.query.search, $options: "i" } } 
+//                 ] 
+//             }).find({ _id: { $ne: req.user._id } },);
+//     res.send(users);
+//   });
 
-module.exports = {loginController, registerController,fetchAllUsersController};
+module.exports = {loginController, registerController};
